@@ -1,14 +1,15 @@
 import axios from "axios";
 
-const entryPoint = "http://localhost:8080";
+// Import the API URL from the globals.
+import { baseUrl } from "./globals";
 
 export const login = async (email: string, password: string) => {
   // Send cookie with x-access-token response header
   axios.defaults.withCredentials = true;
-  const res = axios.post(entryPoint + "/api/auth/signin", { email, password });
+  const res = axios.post(baseUrl + "/api/auth/signin", { email, password });
   return res;
 };
 
 export const register = (nick: string, email: string, password: string) => {
-  return axios.post(entryPoint + "/api/auth/signup", { nick, email, password });
+  return axios.post(baseUrl + "/api/auth/signup", { nick, email, password });
 };

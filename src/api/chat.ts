@@ -1,6 +1,6 @@
 import axios from "axios";
+import { baseUrl } from "./globals";
 
-const entryPoint = "http://localhost:8080";
 // Include credentials axios
 const axiosConfig = {
   withCredentials: true,
@@ -9,7 +9,7 @@ const axiosConfig = {
 export const getChatRooms = async () => {
   // Include cookies and token with request
   const res = await axios.get(
-    entryPoint + "/api/chat/getChatRooms",
+    baseUrl + "/api/chat/getChatRooms",
     axiosConfig
   );
   return res;
@@ -17,7 +17,7 @@ export const getChatRooms = async () => {
 
 export const getMessages = async (chat_id: string) => {
   const res = await axios.post(
-    entryPoint + "/api/chat/getMessages/",
+    baseUrl + "/api/chat/getMessages/",
     {
       chatId: chat_id,
     },
@@ -27,5 +27,5 @@ export const getMessages = async (chat_id: string) => {
 };
 
 export const register = (nick: string, email: string, password: string) => {
-  return axios.post(entryPoint + "/api/auth/signup", { nick, email, password });
+  return axios.post(baseUrl + "/api/auth/signup", { nick, email, password });
 };
