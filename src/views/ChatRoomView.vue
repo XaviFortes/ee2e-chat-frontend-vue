@@ -187,7 +187,6 @@ export default {
         sent_datetime: "",
         from_uid: "",
         user: {
-          user_uuid: "",
           nick: "",
           profile_pic: "",
         },
