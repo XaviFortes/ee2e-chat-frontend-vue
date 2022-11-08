@@ -8,10 +8,7 @@ const axiosConfig = {
 
 export const getChatRooms = async () => {
   // Include cookies and token with request
-  const res = await axios.get(
-    baseUrl + "/api/chat/getChatRooms",
-    axiosConfig
-  );
+  const res = await axios.get(baseUrl + "/api/chat/getChatRooms", axiosConfig);
   return res;
 };
 
@@ -20,6 +17,18 @@ export const getMessages = async (chat_id: string) => {
     baseUrl + "/api/chat/getMessages/",
     {
       chatId: chat_id,
+    },
+    axiosConfig
+  );
+  return res;
+};
+
+export const sendMessage = async (chat_id: string, message: string) => {
+  const res = await axios.post(
+    baseUrl + "/api/chat/postMessage",
+    {
+      chatId: chat_id,
+      message: message,
     },
     axiosConfig
   );
