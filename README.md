@@ -7,25 +7,25 @@ URL of the [backend repo](https://github.com/XaviFortes/ee2e-chat-backend)
 ## Project setup
 I use yarn, but you can use npm if you want.
 
-```
+```sh
 npm install
 ```
 
 ### Compiles and hot-reloads for development
 
-```
+```sh
 npm run dev
 ```
 
 ### Compiles and minifies for production
 
-```
+```sh
 npm run build
 ```
 
 ### Lints and fixes files
 
-```
+```sh
 npm run lint
 ```
 
@@ -51,27 +51,3 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
 ## Customize configuration
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
