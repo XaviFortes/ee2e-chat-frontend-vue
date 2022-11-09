@@ -8,8 +8,6 @@ URL of the [backend repo](https://github.com/XaviFortes/ee2e-chat-backend)
 I use yarn, but you can use npm if you want.
 
 ```
-
-```
 npm install
 ```
 
