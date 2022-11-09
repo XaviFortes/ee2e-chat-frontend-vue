@@ -1,6 +1,9 @@
 # ee2e-chat-frontend-vue
 
-This template should help get you started developing with Vue 3 in Vite.
+You need to also use the repo of the backend to make this work.
+If you want to use the backend on your own server, you need to change the URL in the file `src/api/globals.ts` to your server URL.
+URL of the [backend repo](https://github.com/XaviFortes/ee2e-chat-backend)
+
 
 ## Recommended IDE Setup
 
