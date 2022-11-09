@@ -4,6 +4,36 @@ You need to also use the repo of the backend to make this work.
 If you want to use the backend on your own server, you need to change the URL in the file `src/api/globals.ts` to your server URL.  
 URL of the [backend repo](https://github.com/XaviFortes/ee2e-chat-backend)
 
+## Project setup
+I use yarn, but you can use npm if you want.
+
+```
+
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+
+```
+npm run dev
+```
+
+### Compiles and minifies for production
+
+```
+npm run build
+```
+
+### Lints and fixes files
+
+```
+npm run lint
+```
+
+### Customize configuration
+
+See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Recommended IDE Setup
 

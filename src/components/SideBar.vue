@@ -41,13 +41,13 @@
   </aside>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import logoURL from "../assets/logo.svg";
 const is_expanded = ref(localStorage.getItem("is_expanded") === "true");
 const ToggleMenu = () => {
   is_expanded.value = !is_expanded.value;
-  localStorage.setItem("is_expanded", is_expanded.value);
+  localStorage.setItem("is_expanded", is_expanded.value.toString());
 };
 </script>
 

@@ -128,22 +128,6 @@ function scrollToBottom() {
   }
 }
 
-function notifyUser() {
-  const last = document.querySelector("#msgs > li:last-child");
-  const lastMsg = last?.querySelector("p");
-  const lastMsgText = lastMsg?.textContent;
-  const lastMsgUser = last?.querySelector("#userNick");
-  const lastMsgUserText = lastMsgUser?.textContent;
-  const lastMsgDate = last?.querySelector("#msgDate");
-  const lastMsgDateText = lastMsgDate?.textContent;
-  const notification = new Notification(`${lastMsgUserText} sent a message`, {
-    body: `${lastMsgText} at ${lastMsgDateText}`,
-  });
-  notification.onclick = () => {
-    window.focus();
-  };
-}
-
 async function getMessagesFunc(this: any) {
   const chatid = chat_url_id as string;
   const res = await getMessages(chatid);
