@@ -22,3 +22,8 @@ export const checkAuth = () => {
   axios.defaults.withCredentials = true;
   return axios.get(baseUrl + "/api/user/checkJWT", axiosConfig);
 };
+
+export const logout = () => {
+  axios.defaults.withCredentials = true;
+  return axios.get(baseUrl + "/api/auth/logout", axiosConfig);
+};

@@ -29,7 +29,21 @@ const router = createRouter({
       name: "chatroom",
       component: () => import("../views/ChatRoomView.vue"),
     },
-    
+    {
+      path: "/joinChatRoom",
+      name: "joinChatRoom",
+      component: () => import("../views/JoinChatRoomView.vue"),
+    },
+    {
+      path: "/createChatRoom",
+      name: "createChatRoom",
+      component: () => import("../views/CreateChatRoomView.vue"),
+    },
+    {
+      path: "/logout",
+      name: "logout",
+      component: () => import("../views/LogoutView.vue"),
+    },
     {
       path: "/profile",
       name: "profile",

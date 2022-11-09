@@ -35,6 +35,30 @@ export const sendMessage = async (chat_id: string, message: string) => {
   return res;
 };
 
-export const register = (nick: string, email: string, password: string) => {
-  return axios.post(baseUrl + "/api/auth/signup", { nick, email, password });
+export const createChatRoom = async (
+  name: string,
+  desc: string,
+  pic_url: string
+) => {
+  const res = await axios.post(
+    baseUrl + "/api/chat/createChatRoom",
+    {
+      name: name,
+      desc: desc,
+      pic_url: pic_url,
+    },
+    axiosConfig
+  );
+  return res;
+};
+
+export const joinChatRoom = async (chat_id: string) => {
+  const res = await axios.post(
+    baseUrl + "/api/chat/joinChatRoom",
+    {
+      chatId: chat_id,
+    },
+    axiosConfig
+  );
+  return res;
 };
