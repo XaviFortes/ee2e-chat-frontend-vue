@@ -29,7 +29,7 @@ const router = createRouter({
       name: "chatroom",
       component: () => import("../views/ChatRoomView.vue"),
     },
-    /*
+    
     {
       path: "/profile",
       name: "profile",
@@ -39,7 +39,7 @@ const router = createRouter({
       path: "/:pathMatch(.*)*",
       name: "not-found",
       component: () => import("../views/NotFoundView.vue"),
-    },*/
+    },
   ],
 });
 
