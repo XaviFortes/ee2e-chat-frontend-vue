@@ -1,7 +1,7 @@
 # ee2e-chat-frontend-vue
 
 You need to also use the repo of the backend to make this work.
-If you want to use the backend on your own server, you need to change the URL in the file `src/api/globals.ts` to your server URL.
+If you want to use the backend on your own server, you need to change the URL in the file `src/api/globals.ts` to your server URL.  
 URL of the [backend repo](https://github.com/XaviFortes/ee2e-chat-backend)
 
 
