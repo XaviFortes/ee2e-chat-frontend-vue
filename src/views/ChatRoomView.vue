@@ -121,16 +121,34 @@ import { getUser } from "@/api/user";
 let chat_url_id: string;
 
 function scrollToBottom() {
+  // Scroll to bottom of messages
+  const msgs = document.getElementById("msgs");
+  if (msgs) {
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+}
+
+function notifyUser() {
   const last = document.querySelector("#msgs > li:last-child");
-  last?.scrollIntoView();
+  const lastMsg = last?.querySelector("p");
+  const lastMsgText = lastMsg?.textContent;
+  const lastMsgUser = last?.querySelector("#userNick");
+  const lastMsgUserText = lastMsgUser?.textContent;
+  const lastMsgDate = last?.querySelector("#msgDate");
+  const lastMsgDateText = lastMsgDate?.textContent;
+  const notification = new Notification(`${lastMsgUserText} sent a message`, {
+    body: `${lastMsgText} at ${lastMsgDateText}`,
+  });
+  notification.onclick = () => {
+    window.focus();
+  };
 }
 
 async function getMessagesFunc(this: any) {
   const chatid = chat_url_id as string;
   const res = await getMessages(chatid);
-  console.log(res.data);
-  // Update only if there are new messages
-  if (this.messages != res.data) {
+  // Update only if the messages are different array length
+  if (this.messages.length !== res.data.length) {
     console.log("New messages");
     // Replace date before sending to the v-for loop
     for (let i = 0; i < res.data.length; i++) {
@@ -142,6 +160,7 @@ async function getMessagesFunc(this: any) {
       // Get the user based on the message sender
     }
     this.messages = await res.data;
+    // Notify the user if there are new messages
     // Get user info if it's not already in the array
     /*if (this.message[i]. == undefined) {
         const userx = await getUser(this.messages[i].from_uid);
@@ -149,7 +168,6 @@ async function getMessagesFunc(this: any) {
       }*/
 
     scrollToBottom();
-    this.messagesLength = this.messages.length;
   }
 }
 
@@ -180,22 +198,11 @@ export default {
       // Send message to the API
       const res = await sendMessage(chat_id, this.messageInput);
       console.log(res.data);
-      // Add the message to the messages array
-      this.messages.push({
-        msg_uuid: "",
-        msg_txt: "",
-        sent_datetime: "",
-        from_uid: "",
-        user: {
-          nick: "",
-          profile_pic: "",
-        },
-      });
       // Clear the input
       this.messageInput = "";
 
-      // Get the new messages
-      getMessagesFunc.call(this);
+      // Get the new messages with the new message, don't show until the message is in the array
+      await getMessagesFunc.call(this);
     },
   },
   async mounted() {
@@ -205,7 +212,7 @@ export default {
     // Get the messages
     await getMessagesFunc.call(this);
     // Get the messages every 3 seconds
-    setInterval(getMessagesFunc.bind(this), 10000);
+    setInterval(getMessagesFunc.bind(this), 3000);
   },
 };
 </script>
