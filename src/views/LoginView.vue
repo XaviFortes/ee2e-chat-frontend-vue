@@ -23,7 +23,7 @@
       <p v-if="error" class="error">
         Has introducido mal el email o la contraseña.
       </p>
-      <input class="form-submit" type="submit" value="Login" />
+      <button class="form-submit" type="submit">Login</button>
     </form>
   </div>
 </template>
