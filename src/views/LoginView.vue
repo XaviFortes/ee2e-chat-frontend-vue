@@ -2,7 +2,7 @@
   <div class="login">
     <h1 class="title">Login in the page</h1>
     <form class="form" @submit.prevent="login">
-      <label class="form-label" for="#email">Email:</label>
+      <label class="form-label" for="email">Email:</label>
       <input
         v-model="email"
         class="form-input"
@@ -11,9 +11,10 @@
         required
         placeholder="Email"
       />
-      <label class="form-label" for="#password">Password:</label>
+      <label class="form-label" for="password">Password:</label>
       <input
         v-model="password"
+        required
         class="form-input"
         type="password"
         id="password"
@@ -103,5 +104,10 @@ export default {
   &:hover {
     background: #0b9185;
   }
+}
+.error {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
 }
 </style>
