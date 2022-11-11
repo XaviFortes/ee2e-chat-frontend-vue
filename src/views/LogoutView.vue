@@ -13,6 +13,7 @@ import { useRouter } from "vue-router";
 export default defineComponent({
   async beforeRouteEnter(to, from, next) {
     const res = await logout();
+    localStorage.removeItem("x-access-token");
     if (res.data.message === "Logged out") {
       next();
     } else {

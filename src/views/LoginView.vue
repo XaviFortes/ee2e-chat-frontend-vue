@@ -30,8 +30,13 @@
 
 <script lang="ts">
 import { login } from "@/api/auth";
+import { useToast } from "vue-toastification"; 
 
 export default {
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data: () => ({
     email: "",
     password: "",
@@ -44,8 +49,15 @@ export default {
         // Allow cookie to be used with every request and, secureset SameSite to None
         this.$cookies.config("1d", "/", "localhost", false, "None");
         this.$cookies.set("x-access-token", res.data.accessToken);
+        // Set also the user in the local storage
+        localStorage.setItem(
+          "x-access-token",
+          JSON.stringify(res.data.accessToken)
+        );
+        this.toast.success("Login successful");
         this.$router.push("/chat");
       } catch (error) {
+        this.toast.error("Error logging in");
         console.log(error);
         this.error = true;
       }

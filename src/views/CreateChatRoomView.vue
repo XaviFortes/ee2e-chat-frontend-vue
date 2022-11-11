@@ -87,17 +87,20 @@ export default {
   },
   methods: {
     async createChatRoom() {
-      const response = await createChatRoom(
+      await createChatRoom(
         this.chatRoomName,
         this.chatRoomDescription,
         this.chatRoomPicUrl
-      );
-      if (response.status === 200) {
-        this.toast.success("Chat room created successfully");
-        this.$router.push("/chat");
-      } else {
-        this.toast.error("Error creating chat room");
-      }
+      )
+        .then((response) => {
+          this.toast.success("Chat room created");
+          console.log(response);
+          this.$router.push("/chat");
+        })
+        .catch((error) => {
+          this.toast.error("Error creating chat room");
+          console.log(error);
+        });
     },
   },
 };
