@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import { login } from "@/api/auth";
-import { useToast } from "vue-toastification"; 
+import { useToast } from "vue-toastification";
 
 export default {
   setup() {

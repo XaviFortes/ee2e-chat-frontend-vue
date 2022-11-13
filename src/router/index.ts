@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -63,6 +66,7 @@ router.beforeEach((to, from, next) => {
   const loggedIn = localStorage.getItem("x-access-token");
 
   if (authRequired && !loggedIn) {
+    toast.warning("You must be logged in to view this page");
     return next("/login");
   }
 
