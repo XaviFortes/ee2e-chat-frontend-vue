@@ -62,3 +62,27 @@ export const joinChatRoom = async (chat_id: string) => {
   );
   return res;
 };
+
+export const modifyChatRoom = async ({
+  chat_id,
+  name,
+  desc,
+  pic_url,
+}: {
+  chat_id: string;
+  name?: string;
+  desc?: string;
+  pic_url?: string;
+}) => {
+  const res = await axios.post(
+    baseUrl + "/api/chat/modifyChatRoom",
+    {
+      chatId: chat_id,
+      ...(name && { name: name }),
+      ...(desc && { desc: desc }),
+      ...(pic_url && { pic_url: pic_url }),
+    },
+    axiosConfig
+  );
+  return res;
+};
