@@ -32,7 +32,7 @@ import "./assets/main.css";
 axios.defaults.withCredentials = true;
 
 const ToastOptions = {
-    // You can set your default options here
+  // You can set your default options here
 };
 
 const app = createApp(App).component("font-awesome-icon", FontAwesomeIcon);

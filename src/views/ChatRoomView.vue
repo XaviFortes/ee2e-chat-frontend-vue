@@ -39,7 +39,7 @@ main {
 #msgs {
   overflow-y: auto;
   height: 90vh;
-  width: 180vh;
+  width: 120vh;
 }
 // Send messages form styling
 #msgForm {
@@ -111,6 +111,98 @@ div {
 small {
   font-size: 0.6rem;
 }
+// Menu styling
+#menu {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 20%;
+  height: 100%;
+  background-color: var(--primary);
+  border-radius: 0 0 0 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+#menuBtn {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--secondary);
+  color: var(--light);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+#menuContent {
+  width: 100%;
+  height: 100%;
+  background-color: var(--secondary);
+  border-radius: 0 0 0 10px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#menuContent h3 {
+  color: var(--light);
+}
+#chatSettings {
+  display: flex;
+  align-items: center;
+}
+#chatPic {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin-right: 1rem;
+}
+#chatPic img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+#changePicBtn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--primary);
+  color: var(--light);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+#chatInfo {
+  display: flex;
+  flex-direction: column;
+}
+#chatName {
+  color: var(--light);
+}
+#chatDescription {
+  color: var(--light);
+}
+#chatActions {
+  display: flex;
+  flex-direction: column;
+}
+#chatActions button {
+  width: 100%;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--primary);
+  color: var(--light);
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+#chatActions button:hover {
+  background-color: var(--secondary);
+}
 </style>
 
 <script lang="ts">
@@ -122,10 +214,13 @@ let chat_url_id: string;
 
 function scrollToBottom() {
   // Scroll to bottom of messages
-  const msgs = document.getElementById("msgs");
-  if (msgs) {
-    msgs.scrollTop = msgs.scrollHeight;
-  }
+  // Wait for all messages to be rendered before scrolling
+  setTimeout(() => {
+    const msgs = document.getElementById("msgs");
+    if (msgs) {
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+  }, 100);
 }
 
 async function getMessagesFunc(this: any) {
@@ -144,13 +239,6 @@ async function getMessagesFunc(this: any) {
       // Get the user based on the message sender
     }
     this.messages = await res.data;
-    // Notify the user if there are new messages
-    // Get user info if it's not already in the array
-    /*if (this.message[i]. == undefined) {
-        const userx = await getUser(this.messages[i].from_uid);
-        this.user[i] = userx.data;
-      }*/
-
     scrollToBottom();
   }
 }

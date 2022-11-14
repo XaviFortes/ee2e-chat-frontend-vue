@@ -60,6 +60,7 @@ form button:hover {
 <script lang="ts">
 import { joinChatRoom } from "@/api/chat";
 import { defineComponent } from "vue";
+import { useToast } from "vue-toastification";
 
 export default defineComponent({
   data: () => ({
@@ -67,9 +68,11 @@ export default defineComponent({
   }),
   methods: {
     async joinChatRoom() {
+      const toast = useToast();
       const res = await joinChatRoom(this.chatRoomName);
-      if (res.data.message === "Chat room joined") {
-        this.$router.push("/chat");
+      if (res.status === 200) {
+        toast.success("Joined chat room");
+        this.$router.push(`/chat/${this.chatRoomName}`);
       }
     },
   },
