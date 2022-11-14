@@ -23,6 +23,11 @@ export const checkAuth = () => {
   return axios.get(baseUrl + "/api/user/checkJWT", axiosConfig);
 };
 
+export const isLogged = async () => {
+  axios.defaults.withCredentials = true;
+  return axios.get(baseUrl + "/api/user/isLogged", axiosConfig);
+};
+
 export const logout = () => {
   axios.defaults.withCredentials = true;
   return axios.get(baseUrl + "/api/auth/logout", axiosConfig);

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import { checkAuth, isLogged } from "@/api/auth";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,15 +58,19 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const publicPages = ["/login", "/signup", "/"];
   const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem("x-access-token");
-
+  const loggedIn = await isLogged().then((res) => {
+    if (res.data.message === "Logged!") {
+      return true;
+    } else {
+      return false;
+    }
+  });
   if (authRequired && !loggedIn) {
     return next("/login");
   }
-
   next();
 });
 
