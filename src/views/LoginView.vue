@@ -24,6 +24,9 @@
         Has introducido mal el email o la contraseña.
       </p>
       <button class="form-submit" type="submit">Login</button>
+      <router-link class="form-link" to="/signup">
+        Not a user? Register
+      </router-link>
     </form>
   </div>
 </template>
@@ -115,6 +118,15 @@ export default {
   transition: background 0.2s;
   &:hover {
     background: #0b9185;
+  }
+}
+.form-link {
+  color: #1ab188;
+  text-decoration: none;
+  margin-top: 1rem;
+  text-align: center;
+  &:hover {
+    text-decoration: underline;
   }
 }
 .error {
