@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import { checkAuth, isLogged } from "@/api/auth";
+import { useToast } from "vue-toastification";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -59,9 +60,9 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  
   const publicPages = ["/login", "/signup", "/"];
   const authRequired = !publicPages.includes(to.path);
+  const toast = useToast();
   const loggedIn = await isLogged().then((res) => {
     if (res.data.message === "Logged!") {
       return true;
@@ -70,6 +71,7 @@ router.beforeEach(async (to, from, next) => {
     }
   });
   if (authRequired && !loggedIn) {
+    toast.error("You must be logged in to access this page.");
     return next("/login");
   }
   next();
