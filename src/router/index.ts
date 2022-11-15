@@ -59,6 +59,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  
   const publicPages = ["/login", "/signup", "/"];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = await isLogged().then((res) => {
