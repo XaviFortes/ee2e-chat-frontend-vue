@@ -28,8 +28,13 @@
       />
       <button type="submit">Send</button>
     </form>
+    <sideChatBar />
   </main>
 </template>
+
+<script setup lang="ts">
+import sideChatBar from "@/components/SideChatBar.vue";
+</script>
 
 <style lang="scss" scoped>
 main {

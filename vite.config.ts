@@ -5,14 +5,15 @@ import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import viteCompression from "vite-plugin-compression";
 
-// Add viteCompression and allow brotli compression
-
 export default () => {
   return defineConfig({
     plugins: [
       vue(),
       vueJsx(),
-      viteCompression({ algorithm: "brotliCompress", deleteOriginFile: true }),
+      viteCompression({
+        algorithm: "brotliCompress",
+        deleteOriginFile: false,
+      }),
     ],
     resolve: {
       alias: {
@@ -35,15 +36,3 @@ export default () => {
     },
   });
 };
-
-// https://vitejs.dev/config/
-/*
-export default defineConfig({
-  plugins: [vue(), vueJsx()],
-  resolve: {
-    alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
-    },
-  },
-});
-*/

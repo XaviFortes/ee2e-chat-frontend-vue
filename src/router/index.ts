@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import { checkAuth, isLogged } from "@/api/auth";
+import { isLogged } from "@/api/auth";
 import { useToast } from "vue-toastification";
 
 const router = createRouter({
