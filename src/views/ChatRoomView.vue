@@ -28,8 +28,183 @@
       />
       <button type="submit">Send</button>
     </form>
+    <!-- Include the SideChatBar -->
+    <div id="sideChatBar">
+      <h3>Info</h3>
+      <!-- Modify chat name by clicking on it -->
+      <h2 @click="editChatName">{{ chatName }}</h2>
+      <!-- Mofify picture and description by clicking on it -->
+      <img :src="chatPic" alt="Chat Picture" @click="editChatPic" />
+      <p @click="editChatDescription">{{ chatDescription }}</p>
+      <h3>Members</h3>
+      <ul>
+        <li v-for="member in members" :key="member.user_id">
+          <img :src="member.profile_pic" alt="User Picture" />
+          <div>
+            <h3>{{ member.nick }}</h3>
+            <p>{{ member.email }}</p>
+          </div>
+        </li>
+      </ul>
+    </div>
   </main>
 </template>
+
+<script lang="ts">
+import { useRoute } from "vue-router";
+import {
+  getMessages,
+  sendMessage,
+  modifyChatRoom,
+  getChat,
+  getChatUsers,
+} from "@/api/chat";
+import { getUser } from "@/api/user";
+
+let chat_url_id: string;
+
+function scrollToBottom() {
+  // Scroll to bottom of messages
+  // Wait for all messages to be rendered before scrolling
+  setTimeout(() => {
+    const msgs = document.getElementById("msgs");
+    if (msgs) {
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+  }, 100);
+}
+
+async function getInfo(this: any, uuid: string) {
+  // Get chat name, description and picture from the uuid in database
+  const chatInfo = await getChat(uuid);
+  console.log(chatInfo);
+  this.chatName = chatInfo.data.chat_name;
+  this.chatDescription = chatInfo.data.chat_desc;
+  this.chatPic = chatInfo.data.chat_pic;
+  // Get the members of the chat
+  const chatMembers = await getChatUsers(chat_url_id);
+  console.log(chatMembers);
+  // For chatMembers uuid get the user info
+  for (let i = 0; i < chatMembers.data.length; i++) {
+    const user = await getUser(chatMembers.data[i].user_uid);
+    this.members.push(user.data);
+  }
+}
+
+async function getMessagesFunc(this: any) {
+  const chatid = chat_url_id as string;
+  const res = await getMessages(chatid);
+  // Update only if the messages are different array length
+  if (this.messages.length !== res.data.length) {
+    console.log("New messages");
+    // Replace date before sending to the v-for loop
+    for (let i = 0; i < res.data.length; i++) {
+      res.data[i].sent_datetime = new Date(
+        res.data[i].sent_datetime
+      ).toLocaleString();
+      const user = await getUser(res.data[i].from_uid);
+      res.data[i].user = user.data;
+      // Get the user based on the message sender
+    }
+    this.messages = await res.data;
+    scrollToBottom();
+  }
+}
+
+export default {
+  data() {
+    return {
+      chatName: "Sample Name",
+      chatDescription: "",
+      chatPic: "",
+      members: [
+        {
+          user_id: "",
+          nick: "",
+          email: "",
+          profile_pic: "",
+        },
+      ],
+      messages: [
+        {
+          msg_uuid: "",
+          msg_txt: "",
+          sent_datetime: "",
+          from_uid: "",
+          // Solve message.user undefined
+          user: {
+            nick: "",
+            profile_pic: "",
+          },
+        },
+      ],
+      messageInput: "",
+      messagesLength: 0,
+    };
+  },
+  // Create sendMessage function
+  methods: {
+    async sendMessage() {
+      const chat_id = chat_url_id as string;
+      // Send message to the API
+      const res = await sendMessage(chat_id, this.messageInput);
+      console.log(res.data);
+      // Clear the input
+      this.messageInput = "";
+      // Get the new messages with the new message, don't show until the message is in the array
+      await getMessagesFunc.call(this);
+    },
+    async editChatName() {
+      const chat_id = chat_url_id as string;
+      const newChatName = prompt("New chat name");
+      if (newChatName) {
+        const res = await modifyChatRoom({
+          chat_id: chat_id,
+          name: newChatName,
+        });
+        console.log(res.data);
+        this.chatName = newChatName;
+      }
+    },
+    async editChatPic() {
+      const chat_id = chat_url_id as string;
+      const newChatPic = prompt("New chat picture");
+      if (newChatPic) {
+        const res = await modifyChatRoom({
+          chat_id: chat_id,
+          pic_url: newChatPic,
+        });
+        console.log(res.data);
+        this.chatPic = newChatPic;
+      }
+    },
+    async editChatDescription() {
+      const chat_id = chat_url_id as string;
+      const newChatDescription = prompt("New chat description");
+      if (newChatDescription) {
+        const res = await modifyChatRoom({
+          chat_id: chat_id,
+          desc: newChatDescription,
+        });
+        console.log(res.data);
+        this.chatDescription = newChatDescription;
+      }
+    },
+  },
+  async mounted() {
+    // Get the chat id from the url
+    const route = useRoute();
+    chat_url_id = route.params.chat_id as string;
+    // Remove sample user
+    this.members = [];
+    await getInfo.call(this, chat_url_id);
+    // Get the messages
+    await getMessagesFunc.call(this);
+    // Get the messages every 3 seconds
+    setInterval(getMessagesFunc.bind(this), 3000);
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 main {
@@ -204,87 +379,3 @@ small {
   background-color: var(--secondary);
 }
 </style>
-
-<script lang="ts">
-import { useRoute } from "vue-router";
-import { getMessages, sendMessage } from "@/api/chat";
-import { getUser } from "@/api/user";
-
-let chat_url_id: string;
-
-function scrollToBottom() {
-  // Scroll to bottom of messages
-  // Wait for all messages to be rendered before scrolling
-  setTimeout(() => {
-    const msgs = document.getElementById("msgs");
-    if (msgs) {
-      msgs.scrollTop = msgs.scrollHeight;
-    }
-  }, 100);
-}
-
-async function getMessagesFunc(this: any) {
-  const chatid = chat_url_id as string;
-  const res = await getMessages(chatid);
-  // Update only if the messages are different array length
-  if (this.messages.length !== res.data.length) {
-    console.log("New messages");
-    // Replace date before sending to the v-for loop
-    for (let i = 0; i < res.data.length; i++) {
-      res.data[i].sent_datetime = new Date(
-        res.data[i].sent_datetime
-      ).toLocaleString();
-      const user = await getUser(res.data[i].from_uid);
-      res.data[i].user = user.data;
-      // Get the user based on the message sender
-    }
-    this.messages = await res.data;
-    scrollToBottom();
-  }
-}
-
-export default {
-  data() {
-    return {
-      messages: [
-        {
-          msg_uuid: "",
-          msg_txt: "",
-          sent_datetime: "",
-          from_uid: "",
-          // Solve message.user undefined
-          user: {
-            nick: "",
-            profile_pic: "",
-          },
-        },
-      ],
-      messageInput: "",
-      messagesLength: 0,
-    };
-  },
-  // Create sendMessage function
-  methods: {
-    async sendMessage() {
-      const chat_id = chat_url_id as string;
-      // Send message to the API
-      const res = await sendMessage(chat_id, this.messageInput);
-      console.log(res.data);
-      // Clear the input
-      this.messageInput = "";
-
-      // Get the new messages with the new message, don't show until the message is in the array
-      await getMessagesFunc.call(this);
-    },
-  },
-  async mounted() {
-    // Get the chat id from the url
-    const route = useRoute();
-    chat_url_id = route.params.chat_id as string;
-    // Get the messages
-    await getMessagesFunc.call(this);
-    // Get the messages every 3 seconds
-    setInterval(getMessagesFunc.bind(this), 3000);
-  },
-};
-</script>

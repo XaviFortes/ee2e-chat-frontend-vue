@@ -63,6 +63,28 @@ export const joinChatRoom = async (chat_id: string) => {
   return res;
 };
 
+export const getChat = async (chat_id: string) => {
+  const res = await axios.post(
+    baseUrl + "/api/chat/getChat",
+    {
+      chatId: chat_id,
+    },
+    axiosConfig
+  );
+  return res;
+};
+
+export const getChatUsers = async (chat_id: string) => {
+  const res = await axios.post(
+    baseUrl + "/api/chat/getChatUsers",
+    {
+      chatId: chat_id,
+    },
+    axiosConfig
+  );
+  return res;
+};
+
 export const modifyChatRoom = async ({
   chat_id,
   name,
@@ -77,7 +99,7 @@ export const modifyChatRoom = async ({
   const res = await axios.post(
     baseUrl + "/api/chat/modifyChatRoom",
     {
-      chatId: chat_id,
+      chat_id: chat_id,
       ...(name && { name: name }),
       ...(desc && { desc: desc }),
       ...(pic_url && { pic_url: pic_url }),

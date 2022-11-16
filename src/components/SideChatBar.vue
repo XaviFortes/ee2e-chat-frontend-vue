@@ -34,7 +34,7 @@ import { useRoute } from "vue-router";
 import { modifyChatRoom } from "@/api/chat";
 
 export default defineComponent({
-  name: "ChatRoomView",
+  name: "SideChatBar",
   setup() {
     // Get the chat id from the route
     const route = useRoute();
@@ -44,7 +44,14 @@ export default defineComponent({
     const chatName = ref("");
     const chatPic = ref("");
     const chatDescription = ref("");
-    const members = ref([]);
+    const members = ref([
+      {
+        user_id: "",
+        nick: "",
+        email: "",
+        profile_pic: "",
+      },
+    ]);
 
     // Get the chat name from the uuid in database
 
