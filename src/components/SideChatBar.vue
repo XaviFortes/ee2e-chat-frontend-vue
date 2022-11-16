@@ -44,7 +44,14 @@ export default defineComponent({
     const chatName = ref("");
     const chatPic = ref("");
     const chatDescription = ref("");
-    const members = ref([]);
+    const members = ref([
+      {
+        user_id: "",
+        nick: "",
+        email: "",
+        profile_pic: "",
+      },
+    ]);
 
     // Get the chat name from the uuid in database
 
