@@ -38,7 +38,8 @@ export default defineComponent({
   setup() {
     // Get the chat id from the route
     const route = useRoute();
-    const chatId = route.params.chatId as string;
+    const chatId = route.params.chat_id as string;
+    console.log(chatId);
 
     // Get the chat name from the uuid in database
     const chatName = ref("");
@@ -114,3 +115,80 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+main {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+#chatName {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  width: 100%;
+  height: 7vh;
+  bottom: 0;
+  left: 0;
+  background-color: var(--primary);
+  padding: 0 1rem;
+  cursor: pointer;
+}
+#chatPic {
+  width: 100%;
+  height: 40vh;
+  border-radius: 10px;
+  margin-top: 1rem;
+  background-color: var(--primary);
+  cursor: pointer;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+}
+#chatDescription {
+  width: 100%;
+  height: 10vh;
+  border-radius: 10px;
+  margin-top: 1rem;
+  background-color: var(--primary);
+  cursor: pointer;
+  p {
+    padding: 1rem;
+  }
+}
+#chatMembers {
+  width: 100%;
+  height: 40vh;
+  border-radius: 10px;
+  margin-top: 1rem;
+  background-color: var(--primary);
+  overflow-y: scroll;
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      img {
+        width: 5vh;
+        height: 5vh;
+        border-radius: 50%;
+        margin-right: 1rem;
+      }
+      div {
+        h3 {
+          margin: 0;
+        }
+        p {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+</style>
