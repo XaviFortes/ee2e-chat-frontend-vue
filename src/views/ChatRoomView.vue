@@ -215,7 +215,9 @@ import { useRoute } from "vue-router";
 import { getMessages, sendMessage } from "@/api/chat";
 import { getUser } from "@/api/user";
 
-let chat_url_id: string;
+const route = useRoute();
+
+let chat_url_id: string = useRoute().params.chat_id as string;
 
 function scrollToBottom() {
   // Scroll to bottom of messages
@@ -271,9 +273,9 @@ export default {
   // Create sendMessage function
   methods: {
     async sendMessage() {
-      const chat_id = chat_url_id as string;
+      const chatId = route.params.chat_id as string;
       // Send message to the API
-      const res = await sendMessage(chat_id, this.messageInput);
+      const res = await sendMessage(chatId, this.messageInput);
       console.log(res.data);
       // Clear the input
       this.messageInput = "";
