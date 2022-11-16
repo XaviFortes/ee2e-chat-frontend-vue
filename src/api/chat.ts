@@ -77,7 +77,7 @@ export const modifyChatRoom = async ({
   const res = await axios.post(
     baseUrl + "/api/chat/modifyChatRoom",
     {
-      chatId: chat_id,
+      chat_id: chat_id,
       ...(name && { name: name }),
       ...(desc && { desc: desc }),
       ...(pic_url && { pic_url: pic_url }),
