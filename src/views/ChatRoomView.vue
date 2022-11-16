@@ -217,7 +217,7 @@ import { getUser } from "@/api/user";
 
 const route = useRoute();
 
-let chat_url_id: string = useRoute().params.chat_id as string;
+let chat_url_id: string;
 
 function scrollToBottom() {
   // Scroll to bottom of messages
