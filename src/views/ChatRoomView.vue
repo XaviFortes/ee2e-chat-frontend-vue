@@ -32,11 +32,16 @@
   <aside>
     <!-- Include the SideChatBar -->
     <div id="sideChatBar">
-      <h2>Info</h2>
+      <h2 id="info">Info</h2>
       <!-- Modify chat name by clicking on it -->
       <h3 id="chatName" @click="editChatName">{{ chatName }}</h3>
       <!-- Mofify picture and description by clicking on it -->
-      <img :src="chatPic" alt="Chat Picture" @click="editChatPic" />
+      <img
+        :src="chatPic"
+        id="chatPic"
+        alt="Chat Picture"
+        @click="editChatPic"
+      />
       <p id="chatDesc" @click="editChatDescription">{{ chatDescription }}</p>
       <h3>Members</h3>
       <ul id="member">
@@ -275,12 +280,10 @@ li {
 div {
   margin-left: 10px;
 }
-// Put userNick next to the image
 #userNick {
   margin-right: 100%;
   color: var(--primary);
 }
-// Put msgDate to the right
 #msgDate {
   margin-left: auto;
   color: darkgray;
@@ -288,42 +291,7 @@ div {
 small {
   font-size: 0.6rem;
 }
-// Menu styling
-#menu {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 20%;
-  height: 100%;
-  background-color: var(--primary);
-  border-radius: 0 0 0 10px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-#menuBtn {
-  width: 50px;
-  height: 50px;
-  border: none;
-  border-radius: 50%;
-  background-color: var(--secondary);
-  color: var(--light);
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-#menuContent {
-  width: 100%;
-  height: 100%;
-  background-color: var(--secondary);
-  border-radius: 0 0 0 10px;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-#menuContent h3 {
-  color: var(--light);
-}
+
 #chatSettings {
   display: flex;
   align-items: center;
@@ -334,51 +302,9 @@ small {
   height: 50px;
   margin-right: 1rem;
 }
-#chatPic img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-}
-#changePicBtn {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 20px;
-  height: 20px;
-  border: none;
-  border-radius: 50%;
-  background-color: var(--primary);
-  color: var(--light);
-  font-size: 0.8rem;
-  cursor: pointer;
-}
 #chatInfo {
   display: flex;
   flex-direction: column;
-}
-#chatName {
-  color: var(--light);
-}
-#chatDescription {
-  color: var(--light);
-}
-#chatActions {
-  display: flex;
-  flex-direction: column;
-}
-#chatActions button {
-  width: 100%;
-  height: 50px;
-  border: none;
-  border-radius: 10px;
-  background-color: var(--primary);
-  color: var(--light);
-  font-size: 1.2rem;
-  cursor: pointer;
-  margin-bottom: 1rem;
-}
-#chatActions button:hover {
-  background-color: var(--secondary);
 }
 // CSS for the sideChatBar
 #sideChatBar h2 {
@@ -392,5 +318,11 @@ small {
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
+}
+#chatName,
+#chatDesc {
+  color: var(--primary);
+  text-decoration: underline;
+  cursor: pointer;
 }
 </style>
