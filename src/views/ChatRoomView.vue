@@ -28,26 +28,28 @@
       />
       <button type="submit">Send</button>
     </form>
+  </main>
+  <aside>
     <!-- Include the SideChatBar -->
     <div id="sideChatBar">
-      <h3>Info</h3>
+      <h2>Info</h2>
       <!-- Modify chat name by clicking on it -->
-      <h2 @click="editChatName">{{ chatName }}</h2>
+      <h3 id="chatName" @click="editChatName">{{ chatName }}</h3>
       <!-- Mofify picture and description by clicking on it -->
       <img :src="chatPic" alt="Chat Picture" @click="editChatPic" />
-      <p @click="editChatDescription">{{ chatDescription }}</p>
+      <p id="chatDesc" @click="editChatDescription">{{ chatDescription }}</p>
       <h3>Members</h3>
-      <ul>
+      <ul id="member">
         <li v-for="member in members" :key="member.user_id">
           <img :src="member.profile_pic" alt="User Picture" />
-          <div>
+          <div id="user-info">
             <h3>{{ member.nick }}</h3>
             <p>{{ member.email }}</p>
           </div>
         </li>
       </ul>
     </div>
-  </main>
+  </aside>
 </template>
 
 <script lang="ts">
@@ -377,5 +379,18 @@ small {
 }
 #chatActions button:hover {
   background-color: var(--secondary);
+}
+// CSS for the sideChatBar
+#sideChatBar h2 {
+  color: var(--primary);
+  font-size: large;
+}
+#sideChatBar h3 {
+  color: var(--primary);
+}
+#user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 </style>

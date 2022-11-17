@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <aside>
     <h1>Chat Name</h1>
     <!-- Modify chat name by clicking on it -->
     <div id="chatName" @click="editChatName">
@@ -25,7 +25,7 @@
         </li>
       </ul>
     </div>
-  </main>
+  </aside>
 </template>
 
 <script lang="ts">
