@@ -32,3 +32,24 @@ export const logout = () => {
   axios.defaults.withCredentials = true;
   return axios.get(baseUrl + "/api/auth/logout", axiosConfig);
 };
+
+export const activate = (user_id: string, code: string) => {
+  return axios.post(
+    baseUrl + "/api/auth/verify",
+    {
+      user_id: user_id,
+      code,
+    },
+    axiosConfig
+  );
+};
+
+export const resendActivation = (email: string) => {
+  return axios.post(
+    baseUrl + "/api/mail/resend",
+    {
+      email,
+    },
+    axiosConfig
+  );
+};

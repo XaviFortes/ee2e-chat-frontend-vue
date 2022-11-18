@@ -27,6 +27,9 @@
       <router-link class="form-link" to="/signup">
         Not a user? Register
       </router-link>
+      <router-link class="form-link" to="/activate">
+        Activate account
+      </router-link>
     </form>
   </div>
 </template>
@@ -59,10 +62,15 @@ export default {
         );
         this.toast.success("Login successful");
         this.$router.push("/chat");
-      } catch (error) {
-        this.toast.error("Error logging in");
-        console.log(error);
-        this.error = true;
+      } catch (error: any) {
+        // If error is "User is not activated", redirect to activation view
+        if (error.response.data.message === "User is not activated!") {
+          this.toast.error("User is not activated!");
+          this.$router.push("/activate");
+        } else {
+          this.toast.error("Error logging in");
+          this.error = true;
+        }
       }
     },
   },
