@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /login
+Disallow: /register
+
+Sitemap: https://chat.karasu.es/sitemap.xml
+
+User-agent: MJ12bot
+Crawl-Delay: 300

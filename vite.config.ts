@@ -5,12 +5,26 @@ import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import viteCompression from "vite-plugin-compression";
 
+import Pages from "vite-plugin-pages";
+import generateSitemap from "vite-plugin-pages-sitemap";
+
 export default () => {
   return defineConfig({
     plugins: [
       vue(),
       vueJsx(),
       viteCompression({ algorithm: "brotliCompress", deleteOriginFile: false }),
+      // Compress index.js and index.css with brotli
+      Pages({
+        onRoutesGenerated: (routes) => {
+          generateSitemap({
+            hostname: "https://chat.karasu.es",
+            routes,
+            changefreq: "daily",
+            priority: 0.5,
+          });
+        },
+      }),
     ],
     resolve: {
       alias: {
