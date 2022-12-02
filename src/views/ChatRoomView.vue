@@ -22,8 +22,8 @@
             />
             <!-- Check if it's a youtube link and show the video -->
             <iframe
-              v-if="message.msg_txt && message.msg_txt.includes('youtube.com')"
-              :src="message.msg_txt"
+              v-if="message.msg_vid"
+              :src="message.msg_vid"
               width="560"
               height="315"
               allowfullscreen
@@ -139,7 +139,8 @@ async function getMessagesFunc(this: any) {
       if (res.data[i].msg_txt.startsWith("https://www.youtube.com/")) {
         const url = new URL(res.data[i].msg_txt);
         const videoId = url.searchParams.get("v");
-        res.data[i].msg_txt = `https://www.youtube.com/embed/${videoId}`;
+        res.data[i].msg_txt = "";
+        res.data[i].msg_vid = `https://www.youtube.com/embed/${videoId}`;
       }
       const user = await getUser(res.data[i].from_uid);
       res.data[i].user = user.data;
@@ -169,6 +170,7 @@ export default {
           msg_uuid: "",
           msg_txt: "",
           msg_img: "",
+          msg_vid: "",
           sent_datetime: "",
           from_uid: "",
           // Solve message.user undefined
