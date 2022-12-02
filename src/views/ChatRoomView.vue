@@ -12,7 +12,23 @@
         />
         <div>
           <h3 v-if="message.user" id="userNick">{{ message.user.nick }}</h3>
-          <p>{{ message.msg_txt }}</p>
+          <p>
+            {{ message.msg_txt }}
+            <img
+              id="msgImg"
+              v-if="message.msg_img"
+              :src="message.msg_img"
+              alt="Message Pic"
+            />
+            <!-- Check if it's a youtube link and show the video -->
+            <iframe
+              v-if="message.msg_txt && message.msg_txt.includes('youtube.com')"
+              :src="message.msg_txt"
+              width="560"
+              height="315"
+              allowfullscreen
+            ></iframe>
+          </p>
           <!-- Include datetime formatted -->
           <small id="msgDate">{{ message.sent_datetime }}</small>
         </div>
@@ -109,6 +125,22 @@ async function getMessagesFunc(this: any) {
       res.data[i].sent_datetime = new Date(
         res.data[i].sent_datetime
       ).toLocaleString();
+      // Check if the message is a url and ends with .jpg, .png or .gif
+      if (
+        res.data[i].msg_txt.startsWith("http") &&
+        (res.data[i].msg_txt.endsWith(".jpg") ||
+          res.data[i].msg_txt.endsWith(".png") ||
+          res.data[i].msg_txt.endsWith(".gif"))
+      ) {
+        res.data[i].msg_img = res.data[i].msg_txt;
+        res.data[i].msg_txt = "";
+      }
+      // If the message is a youtube link, get the video id
+      if (res.data[i].msg_txt.includes("youtube.com")) {
+        const url = new URL(res.data[i].msg_txt);
+        const videoId = url.searchParams.get("v");
+        res.data[i].msg_txt = `https://www.youtube.com/embed/${videoId}`;
+      }
       const user = await getUser(res.data[i].from_uid);
       res.data[i].user = user.data;
       // Get the user based on the message sender
@@ -136,6 +168,7 @@ export default {
         {
           msg_uuid: "",
           msg_txt: "",
+          msg_img: "",
           sent_datetime: "",
           from_uid: "",
           // Solve message.user undefined
@@ -154,12 +187,14 @@ export default {
     async sendMessage() {
       const chat_id = chat_url_id as string;
       // Send message to the API
-      const res = await sendMessage(chat_id, this.messageInput);
-      console.log(res.data);
-      // Clear the input
-      this.messageInput = "";
-      // Get the new messages with the new message, don't show until the message is in the array
-      await getMessagesFunc.call(this);
+      // Check if the message isn't empty
+      if (this.messageInput !== "") {
+        await sendMessage(chat_id, this.messageInput);
+        // Clear the input
+        this.messageInput = "";
+        // Get the messages
+        await getMessagesFunc.call(this);
+      }
     },
     async editChatName() {
       const chat_id = chat_url_id as string;
@@ -257,6 +292,12 @@ main {
   color: var(--light);
   font-size: 1.2rem;
   cursor: pointer;
+}
+#msgImg {
+  width: 100%;
+  height: 100%;
+  object-fit: scale-down;
+  border-radius: 10px;
 }
 img {
   width: 50px;
