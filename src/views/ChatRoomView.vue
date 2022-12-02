@@ -135,8 +135,8 @@ async function getMessagesFunc(this: any) {
         res.data[i].msg_img = res.data[i].msg_txt;
         res.data[i].msg_txt = "";
       }
-      // If the message is a youtube link, get the video id
-      if (res.data[i].msg_txt.includes("youtube.com")) {
+      // If the message starts with youtube link, get the video id
+      if (res.data[i].msg_txt.startsWith("https://www.youtube.com/")) {
         const url = new URL(res.data[i].msg_txt);
         const videoId = url.searchParams.get("v");
         res.data[i].msg_txt = `https://www.youtube.com/embed/${videoId}`;
