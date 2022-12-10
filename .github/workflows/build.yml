@@ -33,14 +33,20 @@ jobs:
       run: npm run build
 
 
-    - name: Nginx
-      run: |
-        sudo rm -rf /usr/share/nginx/chat-front/html/*
-        sudo cp -r ./dist/* /usr/share/nginx/chat-front/html
-        sudo chmod -R 777 /usr/share/nginx/chat-front/html
+    #- name: Nginx
+    #  run: |
+    #    sudo rm -rf /usr/share/nginx/chat-front/html/*
+    #    sudo cp -r ./dist/* /usr/share/nginx/chat-front/html
+    #    sudo chmod -R 777 /usr/share/nginx/chat-front/html
 
     - name: Upload build
       uses: actions/upload-artifact@v2
       with:
         name: build
         path: dist
+
+    - name: Dockerfile build
+      run: |
+        docker build -t chat-front:latest .
+        docker tag docker push karasus15/ee2e-chat-frontend:latest
+        docker push docker push karasus15/ee2e-chat-frontend:latest
