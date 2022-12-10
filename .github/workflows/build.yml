@@ -49,4 +49,4 @@ jobs:
       run: |
         docker build -t chat-front .
         docker tag chat-front karasus15/ee2e-chat-frontend:latest
-        docker push docker push karasus15/ee2e-chat-frontend:latest
+        docker push karasus15/ee2e-chat-frontend:latest
