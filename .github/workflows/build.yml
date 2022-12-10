@@ -10,7 +10,7 @@ on:
     - cron: '44 5 * * 0'
 
 jobs:
-prepare:
+  prepare:
     name: Prepare
     runs-on: Linux
     permissions:
