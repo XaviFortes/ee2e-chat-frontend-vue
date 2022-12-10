@@ -29,6 +29,10 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Build
+      run: npm run build
+      
+
     - name: Nginx
       run: |
         sudo cp -r ./dist/* /usr/share/nginx/chat-front/html
