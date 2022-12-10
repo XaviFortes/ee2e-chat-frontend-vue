@@ -1,0 +1,39 @@
+name: "Build"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "main" ]
+  schedule:
+    - cron: '44 5 * * 0'
+
+jobs:
+prepare:
+    name: Prepare
+    runs-on: Linux
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Build
+      run: yarn build
+
+    - name: Nginx
+      run: |
+        sudo cp -r ./dist/* /usr/share/nginx/chat-front/html
+        sudo chown -R nginx:nginx /usr/share/nginx/chat-front/html
