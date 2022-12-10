@@ -47,6 +47,7 @@ jobs:
 
     - name: Dockerfile build
       run: |
+        docker login -u karasus15 -p ${{ secrets.DOCKER_PASSWORD }}
         docker build -t chat-front .
         docker tag chat-front karasus15/ee2e-chat-frontend:latest
         docker push karasus15/ee2e-chat-frontend:latest
