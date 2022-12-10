@@ -38,3 +38,9 @@ jobs:
         sudo rm -rf /usr/share/nginx/chat-front/html/*
         sudo cp -r ./dist/* /usr/share/nginx/chat-front/html
         sudo chmod -R 777 /usr/share/nginx/chat-front/html
+
+    - name: Upload build
+      uses: actions/upload-artifact@v2
+      with:
+        name: build
+        path: dist
