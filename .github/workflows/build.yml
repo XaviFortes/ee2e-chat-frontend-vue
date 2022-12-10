@@ -47,6 +47,6 @@ jobs:
 
     - name: Dockerfile build
       run: |
-        docker build -t karasus15/ee2e-chat-frontend:latest .
-        docker tag docker push karasus15/ee2e-chat-frontend:latest karasus15/ee2e-chat-frontend:latest 
+        docker build -t chat-front .
+        docker tag chat-front karasus15/ee2e-chat-frontend:latest
         docker push docker push karasus15/ee2e-chat-frontend:latest
