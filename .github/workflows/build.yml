@@ -40,7 +40,7 @@ jobs:
     #    sudo chmod -R 777 /usr/share/nginx/chat-front/html
 
     - name: Upload build
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: build
         path: dist
