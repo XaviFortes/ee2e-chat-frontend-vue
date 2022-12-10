@@ -1,6 +1,15 @@
 # syntax=docker/dockerfile:experimental
 FROM nginx:stable-alpine
 
+# Install node
+RUN apk add --no-cache nodejs npm
+
+# Copy package.json
+COPY package.json /app/package.json
+
+# Set working directory
+WORKDIR /app
+
 # Copy nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
 
