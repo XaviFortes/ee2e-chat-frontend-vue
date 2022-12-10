@@ -31,9 +31,10 @@ jobs:
 
     - name: Build
       run: npm run build
-      
+
 
     - name: Nginx
       run: |
+        sudo rm -rf /usr/share/nginx/chat-front/html/*
         sudo cp -r ./dist/* /usr/share/nginx/chat-front/html
-        sudo chown -R nginx:nginx /usr/share/nginx/chat-front/html
+        sudo chmod -R 777 /usr/share/nginx/chat-front/html
