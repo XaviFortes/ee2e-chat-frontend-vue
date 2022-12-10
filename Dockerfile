@@ -8,7 +8,7 @@ WORKDIR /app
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy dist folder
-COPY dist/ /usr/share/nginx/html
+COPY dist/ /etc/nginx/html
 
 # Expose port 80
 EXPOSE 80
