@@ -52,7 +52,7 @@ jobs:
         docker tag chat-front karasus15/ee2e-chat-frontend:latest
         docker push karasus15/ee2e-chat-frontend:latest
 
-    -name: Delete pod
+    - name: Delete pod
       run: |
         kubectl delete pod -l app=ee2e-chat-frontend-vue
         kubectl get pods -l app=ee2e-chat-frontend-vue
